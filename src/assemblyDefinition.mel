@@ -1,0 +1,36 @@
+string $ratlePath = "sceneAssembly/builds/";
+string $rootPath = `workspace -q -rd`;
+string $dirpath = $rootPath + $ratlePath;
+
+string $files[] = `getFileList -fld $dirpath`;
+string $assemblyName[];
+
+$assemblyName[0] = "null";
+
+int $i;
+for ($i = 0; $i < `size $files`; $i++){
+    int $j = (int)$i - 1;
+    if ($j == -1) $j = 0;
+    string $filename = `match ".*[0-9]+" $files[$i]`;
+    if ($assemblyName[$j] != $filename) $assemblyName[$i] = $filename;
+}
+
+for ($i = 0; $i < `size $files`; $i++){
+    print $files[$i];
+    print "\n";
+}
+
+for ($i = 0; $i < `size $assemblyName`; $i++){
+    int $pointer = $i +1;
+    int $pointerCache = 1 * $pointer - 1;
+    int $pointerScene = 2 * $pointer - 1;
+    int $pointerBBox = 3 * $pointer - 1;
+    string $fCache = $ratlePath + $files[$pointerCache];
+    string $fScene = $ratlePath + $files[$pointerScene];
+    string $fBBox = $ratlePath + $files[$pointerBBox];
+    assembly -n $assemblyName[$i];
+    assembly -e -cr "Locator" $assemblyName[$i];
+    assembly -e -cr "Cache" -in $fCache $assemblyName[$i];
+    assembly -e -cr "Scene" -in $fScene $assemblyName[$i];
+    assembly -e -cr "Scene" -in $fBBox $assemblyName[$i];
+}
