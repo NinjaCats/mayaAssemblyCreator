@@ -2,15 +2,15 @@ string $scenceName, $cacheName, $bboxName;
 
 // global Settings
 string $sencetype = "mayaBinary";
-string $raltePath = "sceneAssembly/builds/";
+string $relativePath = "sceneAssembly/builds/";
 
 // Alembic Options
 string $alembicFileType = "ogawa";
 int $optimizeCount = 40000;
 
 proc string makePath(string $name){
-	string $raltePath = "sceneAssembly/builds/";
-    return $raltePath + $name;
+	string $relativePath = "sceneAssembly/builds/";
+    return $relativePath + $name;
 }
 
 string $objs[] = `ls -o -sl`;
@@ -25,7 +25,9 @@ string $objs[] = `ls -o -sl`;
         // export scase files
         file -f -typ $sencetype -es `makePath $scenceName`;
         // export alembic files
-        gpuCache -startTime 1 -endTime 1 -optimize -optimizationThreshold $optimizeCount -writeMaterials -dataFormat $alembicFileType -directory $raltePath -fileName $cacheName $x;
+        gpuCache -startTime 1 -endTime 1 -optimize -optimizationThreshold $optimizeCount
+            -writeMaterials -dataFormat $alembicFileType
+            -directory $relativePath -fileName $cacheName $x;
         // export bbox files and create bbox
         string $createBbox[] = `geomToBBox -ns _BBox -single -shaderColor 0.5 0.5 0.5 -keepOriginal`;
         select -cl;
