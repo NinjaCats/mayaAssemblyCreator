@@ -1,3 +1,5 @@
+file -f -new; // Cleam Sence to Create definitions
+
 string $relativePath = "sceneAssembly/builds/";
 string $rootPath = `workspace -q -rd`;
 string $dirpath = $rootPath + $relativePath;

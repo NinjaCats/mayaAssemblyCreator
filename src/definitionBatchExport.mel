@@ -1,13 +1,13 @@
 // global settings
 
-string $relativePath = "sceneAssembly/builds/";
+string $relativePath = "sceneAssembly/defintions/";
 string $rootPath = `workspace -q -rd`;
 string $dirpath = $rootPath + $relativePath;
 string $sencetype = "mayaBinary";
 //
 
 for ($x in `ls -typ assemblyDefinition`){
-    string $filanme = "defintions/assembly_" + (string)$x;
+    string $filanme = "assembly_" + (string)$x;
     string $filepath = $rootPath + $relativePath + $filanme;
     select -cl;
     select -r $x;
