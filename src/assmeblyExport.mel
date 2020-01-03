@@ -13,6 +13,36 @@ proc string makePath(string $name){
     return $relativePath + $name;
 }
 
+// remove Namespace. this cause file write failed
+
+string $Dagobjects[], $objNamespace[];
+$Dagobjects = `ls -o -dag -v -sns`;
+int $j = 0;
+for ($i=0; $i < size($Dagobjects); $i++){
+    if ($i % 2 && $Dagobjects[$i] != ":"){
+         $objNamespace[$j] = $Dagobjects[$i];
+         $j++;
+         
+    }
+}
+
+for ($x in $objNamespace){
+    catch(`namespace -mnr -rm $x`);
+}
+
+// make group; some object has special char | cause filewrite faild.
+// who can halp how to disable return it;
+
+for ($x in `ls -sl -o -dag`){
+    string $buffer[];
+    tokenize $x "|" $buffer;
+    string $gname = (string)$buffer[0] + "001";
+    if (size(`listRelatives -c -s`) != 0){
+        group -n $gname $x;
+    }
+}
+
+
 string $objs[] = `ls -o -sl`;
 
 {
