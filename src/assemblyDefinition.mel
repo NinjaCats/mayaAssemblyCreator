@@ -19,9 +19,9 @@ int $endspan = size($assemblyName) -1;
 
 for ($i = 0; $i < $endspan; $i++){
     int $offset = $i * 3;
-    int $pointerCache = 0 + $pointer;
-    int $pointerScene = 1 + $pointer;
-    int $pointerBBox = 2 + $pointer;
+    int $pointerCache = 0 + $offset;
+    int $pointerScene = 1 + $offset;
+    int $pointerBBox = 2 + $offset;
     string $fCache = $relativePath + $files[$pointerCache];
     string $fScene = $relativePath + $files[$pointerScene];
     string $fBBox = $relativePath + $files[$pointerBBox];
