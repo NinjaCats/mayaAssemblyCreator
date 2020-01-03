@@ -33,12 +33,15 @@ for ($x in $objNamespace){
 // make group; some object has special char | cause filewrite faild.
 // who can halp how to disable return it;
 
+
+
 for ($x in `ls -sl -o -dag`){
     string $buffer[];
     tokenize $x "|" $buffer;
     string $gname = (string)$buffer[0] + "001";
     if (size(`listRelatives -c -s`) != 0){
         group -n $gname $x;
+        select -cl;
     }
 }
 
